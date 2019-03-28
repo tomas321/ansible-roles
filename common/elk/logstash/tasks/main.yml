@@ -1,0 +1,52 @@
+--- # Logstash tasks
+
+- name: install java 8 jre
+  become: yes
+  apt:
+    name: openjdk-8-jre-headless
+    state: present
+  tags: install
+
+- name: ensure logstash is installed
+  become: yes
+  apt:
+    name: logstash
+    state: present
+  tags: install
+
+- name: install logstash plugins
+  become: yes
+  logstash_plugin:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ logstash.plugins }}"
+  tags: install
+
+#- name: retrieve all configurtion files
+#  become: yes
+#  find:
+#    paths: "/etc/logstash/conf.d"
+#    patterns: "*.conf"
+#  register: logstash_confs
+#  tags: configure
+#
+#- name: disable configurations files
+#  become: yes
+#  command: "mv {{ item.path }} {{ item.path }}.disabled"
+#  with_items: "{{ logstash_confs.files }}"
+#  tags: configure
+
+- name: load configuration
+  become: yes
+  template:
+    src: "logstash.conf"
+    dest: "{{ logstash.config_path }}/{{ logstash.config_file }}"
+  tags: configure
+
+- name: restart and enable logstash
+  become: yes
+  systemd:
+    name: logstash
+    enabled: "{{ logstash.enabled }}"
+    state: "{{ logstash.state }}"
+  tags: configure

@@ -1,0 +1,31 @@
+---
+
+- name: ensure rsyslog is install
+  become: yes
+  package:
+    name: rsyslog
+    state: present
+  register: rsyslog
+  tags: install
+
+- name: load condifguration
+  become: yes
+  template:
+    src: "traffic_collector.conf"
+    dest: "{{ syslog.config.path }}/sensor.conf"
+  tags: configure
+
+- name: enable service
+  become: yes
+  systemd:
+    name: rsyslog
+    enabled: "{{ syslog.enabled }}"
+  when: rsyslog.changed
+  tags: configure
+
+- name: restart rsyslog
+  become: yes
+  systemd:
+    name: rsyslog
+    state: "{{ syslog.state }}"
+  tags: configure

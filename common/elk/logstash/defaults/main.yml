@@ -1,0 +1,16 @@
+--- # Logstash defaults
+
+logstash:
+  plugins: []
+
+  config_path: "/etc/logstash/conf.d"
+  config_file: "sensor.conf"
+
+  enabled: yes
+  state: restarted
+
+  conf:
+    beats_input_port: 5040
+    elastic_hosts: "127.0.0.1:9200"
+    index_prefix: "bp"
+    index: "bp-sensor"

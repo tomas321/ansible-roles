@@ -1,0 +1,51 @@
+--- # Elasticsearch tasks
+
+- name: install java 8 jre
+  become: yes
+  apt:
+    name: openjdk-8-jre-headless
+    state: present
+  tags: install
+
+- name: ensure elasticsearch is installed
+  become: yes
+  apt:
+    name: elasticsearch
+    state: present
+  tags: install
+
+- name: load configuration
+  become: yes
+  template:
+    src: "elasticsearch.yml"
+    dest: "{{ elastic.config_path }}/elasticsearch.yml"
+  tags: configure
+
+- name: remove memory limitations
+  become: yes
+  template:
+    src: "elastic_limits.conf"
+    dest: "/etc/security/limits.d/elastic.limits.conf"
+  tags: configure
+
+- name: ensure {{ elastic.systemd_path }} exists
+  become: yes
+  file: 
+    path: "{{ elastic.systemd_path }}"
+    state: directory
+  tags: configure
+
+- name: override elasticsearch systemd memlimit
+  become: yes
+  template:
+    src: "override.conf"
+    dest: "/etc/systemd/system/elasticsearch.service.d/override.conf"
+  tags: configure
+
+- name: restart and enable elasticsearch
+  become: yes
+  systemd:
+    name: elasticsearch
+    enabled: "{{ elastic.enabled }}"
+    state: "{{ elastic.state }}"
+  tags: configure

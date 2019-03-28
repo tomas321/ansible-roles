@@ -1,0 +1,23 @@
+--- # Filebeat tasks
+
+- name: ensure filebeat is installed
+  become: yes
+  apt:
+    name: filebeat
+    state: present
+  tags: install
+
+- name: load configuration
+  become: yes
+  template:
+    src: filebeat.yml
+    dest: "{{ filebeat.config_path }}/filebeat.yml"
+  tags: configure
+
+- name: restart filebeat
+  become: yes
+  systemd:
+    name: filebeat
+    enabled: "{{ filebeat.enabled }}"
+    state: "{{ filebeat.state }}"
+  tags: configure

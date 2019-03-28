@@ -1,0 +1,53 @@
+--- # ELK dependencies
+
+- name: establish apt https transport
+  become: yes
+  apt:
+    name: apt-transport-https
+    state: present
+  tags: install
+
+- name: check java apt repository presence
+  stat:
+    path: "/etc/apt/sources.list.d/java_8_jre_repository.list"
+  register: java_repo
+
+- name: add java 8 apt repository
+  become: yes
+  copy:
+    src: "java8_repo.list"
+    dest: "/etc/apt/sources.list.d/java_8_jre_repository.list"
+    mode: preserve
+  when: not java_repo.stat.exists
+  register: apt_java_repo
+  tags: install
+
+- name: establish elasticsearch public signing key 
+  become: yes
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+  tags: install
+
+- name: check general elastic apt reposiroty presence
+  stat:
+    path: "/etc/apt/sources.list.d/elastic-6.x.list"
+  register: elastic_repo
+
+- name: add general elastic apt reposiroty
+  become: yes
+  copy:
+    src: "elastic_repo.list"
+    dest: "/etc/apt/sources.list.d/elastic-6.x.list"
+    mode: preserve
+  when: not elastic_repo.stat.exists
+  register: apt_elastic_repo
+  tags: install
+
+
+- name: update repo if changed
+  become: yes
+  apt:
+    update_cache: yes
+  # when: apt_elastic_repo.changed or apt_java_repo.changed
+  tags: install

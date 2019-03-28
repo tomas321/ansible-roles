@@ -1,0 +1,4 @@
+server.host: "{{ kibana.conf.host }}"
+server.port: "{{ kibana.conf.port }}"
+
+elasticsearch.url: "{{ kibana.conf.elastic_url }}"

@@ -1,0 +1,13 @@
+cluster.name: "{{ elastic.cluster }}"
+
+node.name: "{{ elastic.node }}"
+
+path:
+  logs: "{{ elastic.path.logs }}" 
+  data: "{{ elastic.path.data }}"
+
+bootstrap.memory_lock: true
+network.host: "{{ elastic.host }}"
+http.port: "{{ elastic.port }}"
+
+script.painless.regex.enabled: true

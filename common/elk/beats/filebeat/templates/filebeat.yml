@@ -1,0 +1,11 @@
+filebeat.inputs:
+- type: tcp
+  max_message_size: 20MiB
+  host: "{{ filebeat.conf.host }}"
+
+json.message_key: tcp
+
+logging.to_files: true
+
+output.logstash:
+  hosts: "{{ filebeat.conf.logstash_hosts }}"

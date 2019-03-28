@@ -1,0 +1,23 @@
+--- # Kibana tasks
+
+- name: ensure kibana is installed
+  become: yes
+  apt:
+    name: kibana
+    state: present
+  tags: install
+
+- name: load coniguration
+  become: yes
+  template:
+    src: "kibana.yml"
+    dest: "{{ kibana.config_path }}/kibana.yml"
+  tags: configure
+
+- name: restart and enable kibana
+  become: yes
+  systemd:
+    name: kibana
+    enabled: "{{ kibana.enabled }}"
+    state: "{{ kibana.state }}"
+  tags: configure

@@ -1,0 +1,11 @@
+--- # Filebeat defaults
+
+filebeat:
+  enabled: yes
+  state: restarted
+  config_path: "/etc/filebeat"
+
+  conf:
+    host: "0.0.0.0:12000"
+    logstash_hosts: "localhost:5040"
+

@@ -1,0 +1,9 @@
+---
+
+syslog:
+  config: 
+    path: "/etc/rsyslog.d"
+    facility: "local1"
+    level: "info"
+  state: restarted
+  enabled: yes
