@@ -11,7 +11,7 @@
   become: yes
   apt:
     name: logstash
-    state: present
+    state: "{{ logstash.apt_state }}"
   tags: install
 
 - name: install logstash plugins

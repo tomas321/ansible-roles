@@ -4,7 +4,7 @@
   become: yes
   apt:
     name: filebeat
-    state: present
+    state: "{{ filebeat.apt_state }}"
   tags: install
 
 - name: load configuration

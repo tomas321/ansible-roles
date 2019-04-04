@@ -4,7 +4,7 @@
   become: yes
   apt:
     name: kibana
-    state: present
+    state: "{{ kibana.apt_state }}"
   tags: install
 
 - name: load coniguration

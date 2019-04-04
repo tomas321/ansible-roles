@@ -4,6 +4,7 @@ filebeat:
   enabled: yes
   state: restarted
   config_path: "/etc/filebeat"
+  apt_state: "present"
 
   conf:
     host: "0.0.0.0:12000"

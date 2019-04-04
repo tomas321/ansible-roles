@@ -44,8 +44,7 @@
   register: apt_elastic_repo
   tags: install
 
-
-- name: update repo if changed
+- name: update apt cache if changed
   become: yes
   apt:
     update_cache: yes

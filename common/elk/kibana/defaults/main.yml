@@ -4,6 +4,7 @@ kibana:
   enabled: yes
   state: restarted
   config_path: "/etc/kibana"
+  apt_state: "present"
 
   conf:
     host: "0.0.0.0"

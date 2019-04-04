@@ -8,6 +8,7 @@ logstash:
 
   enabled: yes
   state: restarted
+  apt_state: present
 
   conf:
     beats_input_port: 5040
