@@ -1,0 +1,9 @@
+--- # system packages install
+
+- name: ensure compilation tools are present
+  become: yes
+  package:
+    name: "{{ item }}"
+    state: "{{ package_state }}"
+  with_items: "{{ packages }}" 
+  tags: install
