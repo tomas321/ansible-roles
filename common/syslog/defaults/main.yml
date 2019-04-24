@@ -1,9 +1,9 @@
 ---
 
 syslog:
+  logfile: "custom/custom.log"
   config: 
-    path: "/etc/rsyslog.d"
+    path: "/etc/syslog.d/"
     facility: "local1"
-    level: "info"
+    file: "custom.conf"
   state: restarted
-  enabled: yes

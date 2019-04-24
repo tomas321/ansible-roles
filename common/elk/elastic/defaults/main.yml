@@ -3,6 +3,8 @@
 elastic:
   enabled: yes
   state: restarted
+  apt_state: present
+  
   systemd_path: "/etc/systemd/system/elasticsearch.service.d"
   config_path: "/etc/elasticsearch"
   

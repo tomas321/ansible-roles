@@ -1,0 +1,10 @@
+---
+
+rsyslog:
+  logfile: "custom/custom" # always without the suffix
+  config: 
+    path: "/etc/rsyslog.d"
+    facility: "local1"
+    file: "custom.conf"
+  state: restarted
+  enabled: yes
