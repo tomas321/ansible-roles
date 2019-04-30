@@ -1,6 +1,6 @@
 --- # system packages install
 
-- name: ensure compilation tools are present
+- name: ensure tools and programs are {{ package_state }}
   become: yes
   package:
     name: "{{ item }}"

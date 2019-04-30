@@ -23,6 +23,12 @@
   when: rsyslog.changed
   tags: configure
 
+- name: load logrotate configuration
+  template:
+    src: "logrotate"
+    dest: "/etc/logrotate.d/{{ rsyslog.logrotate.file }}"
+  tags: configure
+
 - name: restart rsyslog
   become: yes
   systemd:

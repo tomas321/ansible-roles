@@ -1,0 +1,47 @@
+--- # Traffcol dependencies deployment
+
+- name: yaml-cpp - acquire repository
+  become: yes
+  git:
+    repo: "https://github.com/jbeder/yaml-cpp"
+    clone: true
+    dest: "~/traffcol/dependencies/yaml-cpp"
+  tags: install
+
+- name: yaml-cpp - prepare library
+  become: yes
+  shell: "mkdir build ; cd build && cmake .."
+  args:
+    warn: false  
+    chdir: "~/traffcol/dependencies/yaml-cpp"
+  tags: compile
+
+- name: yaml-cpp - compile
+  become: yes
+  make:
+    chdir: "~/traffcol/dependencies/yaml-cpp/build"
+  tags: compile
+
+- name: yaml-cpp - install library
+  become: yes
+  make:
+    chdir: "~/traffcol/dependencies/yaml-cpp/build"
+    target: install
+  tags:
+    - compile
+    - install
+
+- name: geoip-api-c - add apt repository
+  become: yes
+  apt_repository:
+    repo: "ppa:maxmind/ppa"
+  tags: install
+
+- name: geoip-api-c - install library
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ traffcol.geoip }}"
+  tags: install

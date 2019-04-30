@@ -1,7 +1,9 @@
 ---
 
 rsyslog:
-  logfile: "custom/custom" # always without the suffix
+  logrotate:
+    file: "custom"
+  logfile: "custom/custom.log"
   config: 
     path: "/etc/rsyslog.d"
     facility: "local1"

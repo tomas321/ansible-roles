@@ -1,0 +1,7 @@
+--- # Default variables
+
+traffcol:
+  geoip:
+    - libgeoip1
+    - libgeoip-dev
+    - geoip-bin

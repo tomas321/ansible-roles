@@ -39,7 +39,7 @@
   become: yes
   template:
     src: "override.conf"
-    dest: "/etc/systemd/system/elasticsearch.service.d/override.conf"
+    dest: "{{ elastic.systemd_path }}/override.conf"
   tags: configure
 
 - name: restart and enable elasticsearch
